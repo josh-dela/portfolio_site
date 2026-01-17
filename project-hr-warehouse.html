@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Data Warehouse - Project Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .project-detail {
+            padding: 100px 0 80px;
+        }
+        .project-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .project-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-black);
+        }
+        .project-header .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--color-brown);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .project-header .back-link:hover {
+            color: var(--color-brown-dark);
+        }
+        .project-header .project-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        .project-meta span {
+            color: var(--color-grey-dark);
+        }
+        .project-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .project-image-large {
+            margin: 2rem 0;
+        }
+        .project-image-large .image-placeholder {
+            width: 100%;
+            max-width: 100%;
+            aspect-ratio: 16/9;
+            height: auto;
+        }
+        .project-section {
+            margin-bottom: 3rem;
+        }
+        .project-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--color-black);
+            border-bottom: 2px solid var(--color-ash);
+            padding-bottom: 0.5rem;
+        }
+        .project-section h3 {
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--color-black);
+        }
+        .project-section p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+            color: var(--color-grey-dark);
+        }
+        .project-section ul, .project-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+            color: var(--color-grey-dark);
+        }
+        .project-section li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        .project-section code {
+            background-color: var(--color-grey-light);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: var(--color-brown-dark);
+        }
+        .project-section pre {
+            background-color: var(--color-grey-light);
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            border-left: 4px solid var(--color-brown);
+            margin: 1rem 0;
+        }
+        .project-section pre code {
+            background: none;
+            padding: 0;
+            color: var(--color-black);
+        }
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .image-gallery .image-placeholder {
+            aspect-ratio: 4/3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="index.html">Portfolio</a>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html#home" class="nav-link">Home</a></li>
+                <li><a href="index.html#about" class="nav-link">About</a></li>
+                <li><a href="index.html#projects" class="nav-link">Projects</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Project Detail Section -->
+    <section class="project-detail">
+        <div class="container">
+            <div class="project-header">
+                <a href="index.html#projects" class="back-link">← Back to Projects</a>
+                <h1>Building an HR Data Warehouse</h1>
+                <div class="project-meta">
+                    <span><strong>Category:</strong> Data Engineering</span>
+                    <span><strong>Technologies:</strong> SQL Server, ETL, Medallion Architecture</span>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <!-- Introduction -->
+                <div class="project-section">
+                    <h2>Introduction</h2>
+                    <p>In this project, I built a comprehensive data warehouse solution for HR and training data. This blog post will walk you through the entire process, from understanding what a data warehouse is to implementing a production-ready solution using the Medallion Architecture.</p>
+                </div>
+
+                <!-- What is a Data Warehouse -->
+                <div class="project-section">
+                    <h2>What is a Data Warehouse?</h2>
+                    <p>A <strong>data warehouse</strong> is a centralized storage repository that consolidates structured data from multiple sources. Unlike operational databases designed for transactions, data warehouses are optimized for analytical queries and business intelligence. They enable organizations to make data-driven decisions by providing a single source of truth for historical and current data.</p>
+                </div>
+
+                <!-- The ETL Process -->
+                <div class="project-section">
+                    <h2>The ETL Process</h2>
+                    <p>To populate our data warehouse, we use an <strong>ETL (Extract, Transform, Load)</strong> process:</p>
+                    <ul>
+                        <li><strong>Extract</strong>: Pull data from various source systems</li>
+                        <li><strong>Transform</strong>: Clean, standardize, and enrich the data</li>
+                        <li><strong>Load</strong>: Store the processed data in the warehouse</li>
+                    </ul>
+                    <div class="project-image-large">
+                        <div class="image-placeholder">
+                            <span>Architecture Diagram</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medallion Architecture -->
+                <div class="project-section">
+                    <h2>Medallion Architecture Overview</h2>
+                    <p>We implemented the <strong>Medallion Architecture</strong>, a three-layer approach that progressively refines data quality:</p>
+                    <ol>
+                        <li><strong>Bronze Layer</strong>: Raw, unprocessed data (as-is from sources)</li>
+                        <li><strong>Silver Layer</strong>: Cleaned and standardized data</li>
+                        <li><strong>Gold Layer</strong>: Business-ready analytical models</li>
+                    </ol>
+                    <p>This architecture ensures data quality, traceability, and enables incremental data processing.</p>
+                </div>
+
+                <!-- Source Data -->
+                <div class="project-section">
+                    <h2>Source Data</h2>
+                    <p>Our project consolidates data from two source systems:</p>
+                    
+                    <h3>HR System</h3>
+                    <ul>
+                        <li><code>employee_info.csv</code>: Employee master data including ID, name, department, role, and hire date</li>
+                        <li><code>training_courses.csv</code>: Training course catalog with course details, categories, duration, and cost</li>
+                        <li><code>training_completions.csv</code>: Training completion records with employee IDs, course codes, completion dates, scores, and status</li>
+                    </ul>
+
+                    <h3>LMS System (source_lms/)</h3>
+                    <ul>
+                        <li><code>employee_demographics.csv</code>: Employee demographic information (birthdate, gender, education level)</li>
+                        <li><code>department.csv</code>: Department master data (department codes, names, and locations)</li>
+                        <li><code>course_categories.csv</code>: Course category hierarchy with subcategories and certification requirements</li>
+                    </ul>
+
+                    <div class="project-image-large">
+                        <div class="image-placeholder">
+                            <span>Bronze Layer Diagram</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bronze Layer -->
+                <div class="project-section">
+                    <h2>Bronze Layer: Raw Data Ingestion</h2>
+                    <p>The <strong>Bronze layer</strong> serves as our data lake's entry point. Here, data is loaded exactly as it appears in the source files—no transformations, no cleaning, just pure raw data.</p>
+
+                    <h3>Why Keep Raw Data?</h3>
+                    <p>Maintaining data in its original form provides several critical benefits:</p>
+                    <ol>
+                        <li><strong>Debugging</strong>: When issues arise during transformation, we can trace back to the original source</li>
+                        <li><strong>Data Integrity</strong>: Preserves the original data state for audit and compliance purposes</li>
+                        <li><strong>Reprocessing</strong>: Allows us to reprocess data with different transformation logic without re-extracting from sources</li>
+                        <li><strong>Reliability</strong>: Acts as a safety net if data is accidentally corrupted during transformation</li>
+                    </ol>
+                    <p>In our implementation, we use <code>BULK INSERT</code> to efficiently load CSV files into SQL Server tables, preserving the exact structure and content from the source systems.</p>
+                </div>
+
+                <!-- Silver Layer -->
+                <div class="project-section">
+                    <h2>Silver Layer: Data Cleansing and Transformation</h2>
+                    <p>This is where we transform raw, messy data into clean, standardized, and reliable datasets ready for analytics.</p>
+
+                    <div class="project-image-large">
+                        <div class="image-placeholder">
+                            <span>Silver Layer Diagram</span>
+                        </div>
+                    </div>
+
+                    <h3>Loading Strategy</h3>
+                    <p>Before loading data, we:</p>
+                    <ol>
+                        <li><strong>Truncate</strong> existing tables to ensure a clean slate</li>
+                        <li>Use <strong>BULK INSERT</strong> with <strong>TABLOCK</strong> for faster, exclusive loading</li>
+                        <li>Apply transformations during the INSERT operation</li>
+                    </ol>
+
+                    <h3>Transformation Techniques Applied</h3>
+
+                    <h4>1. Data Standardization</h4>
+                    <p>We normalize inconsistent values to standard formats:</p>
+                    <ul>
+                        <li><strong>Gender codes</strong>: 'M', 'MALE' → 'Male'; 'F', 'FEMALE' → 'Female'</li>
+                        <li><strong>Status codes</strong>: 'COMP' → 'Completed'; 'INPROG' → 'InProgress'; 'FAIL' → 'Failed'; 'PEND' → 'Pending'</li>
+                        <li><strong>Certification flags</strong>: 'YES', 'Y', 'TRUE', '1' → 'Yes'; 'NO', 'N', 'FALSE', '0' → 'No'</li>
+                    </ul>
+
+                    <h4>2. String Cleaning</h4>
+                    <ul>
+                        <li><code>TRIM()</code>: Removes leading and trailing whitespace from text fields</li>
+                        <li><code>UPPER()</code>: Converts codes and categories to uppercase for consistency</li>
+                    </ul>
+
+                    <h4>3. Null Value Handling</h4>
+                    <p>We handle NULL values strategically:</p>
+                    <ul>
+                        <li><strong>Numeric fields</strong>: Replace NULL with 0 (e.g., course cost, duration)</li>
+                        <li><strong>Text fields</strong>: Replace NULL with 'n/a' for categorical data</li>
+                        <li><strong>Date fields</strong>: Validate and set invalid dates (like future birthdates) to NULL</li>
+                    </ul>
+
+                    <h4>4. Deduplication</h4>
+                    <ul>
+                        <li><code>ROW_NUMBER()</code>: Used to keep only the most recent record per employee (based on hire date)</li>
+                        <li><code>SELECT DISTINCT</code>: Removes duplicate rows in dimension tables (departments, course categories)</li>
+                    </ul>
+
+                    <h4>5. Data Validation</h4>
+                    <p>We enforce business rules:</p>
+                    <ul>
+                        <li><strong>Score validation</strong>: Clamp percentage scores between 0-100</li>
+                        <li><strong>Date validation</strong>: Filter out future completion dates and invalid birthdates</li>
+                        <li><strong>Referential integrity</strong>: Ensure required fields (like employee IDs, department codes) are not NULL</li>
+                    </ul>
+
+                    <h4>6. Data Type Conversion</h4>
+                    <ul>
+                        <li><code>CAST()</code>: Explicit type conversion to ensure consistent date formats</li>
+                    </ul>
+
+                    <h3>Example Transformation</h3>
+                    <p>Here's how a training completion record is transformed:</p>
+                    <p><strong>Before (Bronze):</strong></p>
+                    <pre><code>status_code: "COMP"
+score_pct: 105
+completion_date: "2025-12-31"  (future date)</code></pre>
+                    <p><strong>After (Silver):</strong></p>
+                    <pre><code>status_code: "Completed"
+score_pct: 100  (clamped to max)
+completion_date: NULL  (filtered out - future date)</code></pre>
+                </div>
+
+                <!-- Image Gallery -->
+                <div class="project-section">
+                    <h2>Project Visuals</h2>
+                    <div class="image-gallery">
+                        <div class="image-placeholder">
+                            <span>Project Image 1</span>
+                        </div>
+                        <div class="image-placeholder">
+                            <span>Project Image 2</span>
+                        </div>
+                        <div class="image-placeholder">
+                            <span>Project Image 3</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Portfolio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
