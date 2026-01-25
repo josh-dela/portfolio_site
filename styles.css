@@ -263,6 +263,7 @@ section {
     text-decoration: none;
     color: inherit;
     display: block;
+    height: 100%;
 }
 
 .project-card {
@@ -272,6 +273,9 @@ section {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid var(--color-ash);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .project-card:hover {
@@ -299,6 +303,9 @@ section {
 
 .project-content {
     padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .project-title {
@@ -311,22 +318,30 @@ section {
     color: var(--color-grey-dark);
     margin-bottom: 1rem;
     line-height: 1.6;
+    flex-grow: 1;
 }
 
 .project-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    align-items: center;
+    gap: 0;
     margin-bottom: 1rem;
 }
 
 .tag {
-    padding: 5px 12px;
-    background-color: var(--color-ash);
-    color: var(--color-black);
-    border-radius: 20px;
+    padding: 0;
+    background-color: transparent;
+    color: var(--color-grey-dark);
+    border-radius: 0;
     font-size: 0.85rem;
     font-weight: 500;
+}
+
+.tag:not(:last-child)::after {
+    content: ' |';
+    margin-right: 0.5rem;
+    color: var(--color-ash);
 }
 
 /* Contact Section */
@@ -337,24 +352,26 @@ section {
 .contact-content {
     max-width: 600px;
     margin: 0 auto;
-    text-align: center;
+    text-align: left;
 }
 
 .contact-content > p {
     font-size: 1.1rem;
     color: var(--color-grey-dark);
     margin-bottom: 2rem;
+    text-align: center;
 }
 
 .contact-info {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .contact-item {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
     gap: 0.5rem;
 }
 
@@ -362,6 +379,7 @@ section {
     font-weight: 600;
     color: var(--color-black);
     font-size: 1rem;
+    min-width: 100px;
 }
 
 .contact-link {
