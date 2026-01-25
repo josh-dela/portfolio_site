@@ -259,6 +259,12 @@ section {
     gap: 2.5rem;
 }
 
+.project-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
 .project-card {
     background-color: var(--color-white);
     border-radius: 10px;
@@ -340,42 +346,44 @@ section {
     margin-bottom: 2rem;
 }
 
-.contact-form {
-    text-align: left;
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
-.form-group {
-    margin-bottom: 1.5rem;
+.contact-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
+.contact-label {
+    font-weight: 600;
     color: var(--color-black);
-    font-weight: 500;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid var(--color-ash);
-    border-radius: 5px;
     font-size: 1rem;
-    font-family: inherit;
-    transition: border-color 0.3s ease;
-    background-color: var(--color-white);
-    color: var(--color-black);
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--color-brown);
+.contact-link {
+    color: var(--color-brown);
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
 }
 
-.form-group textarea {
-    resize: vertical;
+.contact-link:hover {
+    color: var(--color-brown-dark);
+    text-decoration: underline;
+}
+
+.contact-text {
+    color: var(--color-grey-dark);
+    font-size: 1.1rem;
+}
+
+.contact-text.available {
+    color: var(--color-brown);
+    font-weight: 600;
 }
 
 /* Footer */

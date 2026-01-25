@@ -63,30 +63,6 @@ function highlightActiveSection() {
 
 window.addEventListener('scroll', highlightActiveSection);
 
-// Contact Form Handling
-const contactForm = document.getElementById('contactForm');
-
-if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        // Get form values
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const message = document.getElementById('message').value;
-
-        // Simple validation
-        if (name && email && message) {
-            // Here you would typically send the form data to a server
-            // For now, we'll just show an alert
-            alert('Thank you for your message! I will get back to you soon.');
-            contactForm.reset();
-        } else {
-            alert('Please fill in all fields.');
-        }
-    });
-}
-
 // Fade in animation on scroll
 const observerOptions = {
     threshold: 0.1,

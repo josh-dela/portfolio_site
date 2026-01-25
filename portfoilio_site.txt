@@ -1,0 +1,121 @@
+# Building an HR Data Warehouse
+
+## Introduction
+
+In this project, I built a comprehensive data warehouse solution for HR and training data. This blog post will walk you through the entire process, from understanding what a data warehouse is to implementing a production-ready solution using the Medallion Architecture.
+
+## What is a Data Warehouse?
+
+A **data warehouse** is a centralized storage repository that consolidates structured data from multiple sources. Unlike operational databases designed for transactions, data warehouses are optimized for analytical queries and business intelligence. They enable organizations to make data-driven decisions by providing a single source of truth for historical and current data.
+
+## The ETL Process
+
+To populate our data warehouse, we use an **ETL (Extract, Transform, Load)** process:
+
+- **Extract**: Pull data from various source systems
+- **Transform**: Clean, standardize, and enrich the data
+- **Load**: Store the processed data in the warehouse
+
+[Insert Pic_1: Architecture Diagram]
+
+## Medallion Architecture Overview
+
+We implemented the **Medallion Architecture**, a three-layer approach that progressively refines data quality:
+
+1. **Bronze Layer**: Raw, unprocessed data (as-is from sources)
+2. **Silver Layer**: Cleaned and standardized data
+3. **Gold Layer**: Business-ready analytical models
+
+This architecture ensures data quality, traceability, and enables incremental data processing.
+
+## Source Data
+
+Our project consolidates data from two source systems:
+
+### HR System 
+- **employee_info.csv**: Employee master data including ID, name, department, role, and hire date
+- **training_courses.csv**: Training course catalog with course details, categories, duration, and cost
+- **training_completions.csv**: Training completion records with employee IDs, course codes, completion dates, scores, and status
+
+### LMS System (source_lms/)
+- **employee_demographics.csv**: Employee demographic information (birthdate, gender, education level)
+- **department.csv**: Department master data (department codes, names, and locations)
+- **course_categories.csv**: Course category hierarchy with subcategories and certification requirements
+
+[Insert Pic_2: Bronze Layer Diagram]
+
+## Bronze Layer: Raw Data Ingestion
+
+The **Bronze layer** serves as our data lake's entry point. Here, data is loaded exactly as it appears in the source files—no transformations, no cleaning, just pure raw data.
+
+### Why Keep Raw Data?
+
+Maintaining data in its original form provides several critical benefits:
+
+1. **Debugging**: When issues arise during transformation, we can trace back to the original source
+2. **Data Integrity**: Preserves the original data state for audit and compliance purposes
+3. **Reprocessing**: Allows us to reprocess data with different transformation logic without re-extracting from sources
+4. **Reliability**: Acts as a safety net if data is accidentally corrupted during transformation
+
+In our implementation, we use `BULK INSERT` to efficiently load CSV files into SQL Server tables, preserving the exact structure and content from the source systems.
+
+[Insert Pic_3: Silver Layer Diagram]
+
+## Silver Layer: Data Cleansing and Transformation
+
+This is where we transform raw, messy data into clean, standardized, and reliable datasets ready for analytics.
+
+### Loading Strategy
+
+Before loading data, we:
+1. **Truncate** existing tables to ensure a clean slate
+2. Use **BULK INSERT** with **TABLOCK**  for faster, exclusive loading
+3. Apply transformations during the INSERT operation
+
+### Transformation Techniques Applied
+
+#### 1. Data Standardization
+We normalize inconsistent values to standard formats:
+- **Gender codes**: 'M', 'MALE' → 'Male'; 'F', 'FEMALE' → 'Female'
+- **Status codes**: 'COMP' → 'Completed'; 'INPROG' → 'InProgress'; 'FAIL' → 'Failed'; 'PEND' → 'Pending'
+- **Certification flags**: 'YES', 'Y', 'TRUE', '1' → 'Yes'; 'NO', 'N', 'FALSE', '0' → 'No'
+
+#### 2. String Cleaning
+- **TRIM()**: Removes leading and trailing whitespace from text fields
+- **UPPER()**: Converts codes and categories to uppercase for consistency
+
+#### 3. Null Value Handling
+We handle NULL values strategically:
+- **Numeric fields**: Replace NULL with 0 (e.g., course cost, duration)
+- **Text fields**: Replace NULL with 'n/a' for categorical data
+- **Date fields**: Validate and set invalid dates (like future birthdates) to NULL
+
+#### 4. Deduplication
+- **ROW_NUMBER()**: Used to keep only the most recent record per employee (based on hire date)
+- **SELECT DISTINCT**: Removes duplicate rows in dimension tables (departments, course categories)
+
+#### 5. Data Validation
+We enforce business rules:
+- **Score validation**: Clamp percentage scores between 0-100
+- **Date validation**: Filter out future completion dates and invalid birthdates
+- **Referential integrity**: Ensure required fields (like employee IDs, department codes) are not NULL
+
+#### 6. Data Type Conversion
+- **CAST()**: Explicit type conversion to ensure consistent date formats
+
+### Example Transformation
+
+Here's how a training completion record is transformed:
+
+**Before (Bronze):**
+```
+status_code: "COMP"
+score_pct: 105
+completion_date: "2025-12-31"  (future date)
+```
+
+**After (Silver):**
+```
+status_code: "Completed"
+score_pct: 100  (clamped to max)
+completion_date: NULL  (filtered out - future date)
