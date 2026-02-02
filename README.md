@@ -1,1 +1,1 @@
-Hi There, Welcome to My Portfolio Sites. Made a few changes
+Hi There, Welcome to My Portfolio Sites.
