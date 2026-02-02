@@ -91,6 +91,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     sections.forEach(section => {
+        // Skip fade-in animation for project detail pages - show content immediately
+        if (section.classList.contains('project-detail')) {
+            return;
+        }
         section.style.opacity = '0';
         section.style.transform = 'translateY(20px)';
         section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
