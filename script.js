@@ -3,34 +3,39 @@ const navToggle = document.getElementById('navToggle');
 const navMenu = document.getElementById('navMenu');
 const navLinks = document.querySelectorAll('.nav-link');
 
-navToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    navToggle.classList.toggle('active');
-});
-
-// Close mobile menu when clicking on a link
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-        navToggle.classList.remove('active');
+if (navToggle && navMenu) {
+    navToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+        navToggle.classList.toggle('active');
     });
-});
 
-// Close mobile menu when clicking outside
-document.addEventListener('click', (e) => {
-    if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
-        navMenu.classList.remove('active');
-        navToggle.classList.remove('active');
-    }
-});
+    // Close mobile menu when clicking on a link
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            navToggle.classList.remove('active');
+        });
+    });
 
-// Smooth scrolling for anchor links
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+            navMenu.classList.remove('active');
+            navToggle.classList.remove('active');
+        }
+    });
+}
+
+// Smooth scrolling for anchor links (only for same-page anchors)
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+        
+        const target = document.querySelector(href);
         if (target) {
-            const offsetTop = target.offsetTop - 70; // Account for sticky navbar
+            e.preventDefault();
+            const offsetTop = target.offsetTop - 70;
             window.scrollTo({
                 top: offsetTop,
                 behavior: 'smooth'
@@ -39,7 +44,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Active navigation link highlighting on scroll
+// Active navigation link highlighting on scroll (only on index page)
 const sections = document.querySelectorAll('section[id]');
 
 function highlightActiveSection() {
@@ -61,44 +66,40 @@ function highlightActiveSection() {
     });
 }
 
-window.addEventListener('scroll', highlightActiveSection);
+if (sections.length > 0) {
+    window.addEventListener('scroll', highlightActiveSection);
+}
 
-// Fade in animation on scroll
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
-
-// Observe project cards and sections
+// Fade in animation on scroll - ONLY for index page elements, NOT project detail pages
 document.addEventListener('DOMContentLoaded', () => {
-    const projectCards = document.querySelectorAll('.project-card');
-    const sections = document.querySelectorAll('section');
+    // Check if we're on a project detail page - if so, skip animations
+    const isProjectDetailPage = document.querySelector('.project-detail');
+    if (isProjectDetailPage) {
+        return; // No animations on project detail pages - show content immediately
+    }
 
+    // Only apply animations on the main index page
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    const projectCards = document.querySelectorAll('.project-card');
+    
     projectCards.forEach(card => {
         card.style.opacity = '0';
         card.style.transform = 'translateY(20px)';
         card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(card);
-    });
-
-    sections.forEach(section => {
-        // Skip fade-in animation for project detail pages - show content immediately
-        if (section.classList.contains('project-detail')) {
-            return;
-        }
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(20px)';
-        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(section);
     });
 });
 
