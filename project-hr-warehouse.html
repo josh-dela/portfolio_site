@@ -140,6 +140,14 @@
             aspect-ratio: 1411 / 584;
         }
 
+        .project-image-large .image-placeholder .diagram-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 5px;
+            display: block;
+        }
+
         .image-gallery {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -255,7 +263,7 @@
                     </ul>
                     <div class="project-image-large architecture-diagram">
                         <div class="image-placeholder">
-                            <span>Architecture Diagram</span>
+                            <img src="images/architecture_diagram.png" alt="Architecture Diagram" class="diagram-image">
                         </div>
                     </div>
                 </div>
